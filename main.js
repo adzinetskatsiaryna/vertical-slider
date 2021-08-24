@@ -16,6 +16,7 @@ upButton.addEventListener('click', ()=>{
 downButton.addEventListener('click', ()=>{
     changeSlide('down')});
 
+//  infiniteSlider   
 function infiniteSlider(slide1, slide2, direction) {
     slide1.append(slide1.firstElementChild);
     slide2.prepend(slide2.lastElementChild);
