@@ -16,18 +16,38 @@ upButton.addEventListener('click', ()=>{
 downButton.addEventListener('click', ()=>{
     changeSlide('down')});
 
+function infiniteSlider(slide1, slide2, direction) {
+    slide1.append(slide1.firstElementChild);
+    slide2.prepend(slide2.lastElementChild);
+    slideLeft.style.transition = "none";
+    slideRight.style.transition = "none";
+    if (direction === "up") {
+        activeSlideIndex = slidesLength - 2;
+    } else if (direction === "down") {
+        activeSlideIndex = 1;
+    }
+    setTimeout(function () {
+        slideLeft.style.transition = "0.5s ease-out";
+        slideRight.style.transition = "0.5s ease-out";
+    });
+    setTimeout(function () {
+        changeSlide(direction);
+    });
+}
+      
+
 // function changes slides
 const changeSlide = (direction)=>{
     const sliderHeight = sliderContainer.clientHeight;
     if(direction ==='up'){
         activeSlideIndex++;
-        if(activeSlideIndex > slidesLength - 1){
-            activeSlideIndex = 0
+        if(activeSlideIndex === slidesLength){
+            infiniteSlider(slideRight, slideLeft, direction)
         }
     } else if(direction ==='down'){
         activeSlideIndex--;
         if(activeSlideIndex < 0){
-            activeSlideIndex = slidesLength - 1;
+            infiniteSlider(slideLeft, slideRight, direction)
         }
     }
     slideRight.style.transform = `translateY(-${activeSlideIndex * sliderHeight}px)`;
